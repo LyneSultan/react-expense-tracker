@@ -12,7 +12,21 @@ const Transactions = () => {
       .catch(error => {
         console.error("Error fetching transactions:", error);
       });
+
   }, []);
+  const deleteTransaction = (id) => {
+    fetch(`http://localhost/react-expense/src/server/delete_transaction.php?id=${id}`, {
+      method: 'DELETE',
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log("deleted");
+
+      })
+      .catch(error => {
+        console.error("Error deleting transaction:", error);
+      });
+  };
 
   return (
     <table>
@@ -35,7 +49,7 @@ const Transactions = () => {
             <td>{transaction.date}</td>
             <td>{transaction.notes}</td>
             <td>
-              <button >Delete</button>
+              <button onClick={() => deleteTransaction(transaction.id)}>Delete</button>
             </td>
           </tr>
         ))}
